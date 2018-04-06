@@ -16,9 +16,9 @@ def unique_houses(filename):
     houses = set()
 
     for line in open_file:
-        columns = line.split("|")
-        if columns[2] != "":
-            houses.add(columns[2])
+        _, _, house, _, _ = line.split("|")
+        if house:
+            houses.add(house)
     return houses
 
 unique_houses("cohort_data.txt")    
@@ -46,19 +46,20 @@ def sort_by_cohort(filename):
     ghosts = []
 
     for line in open_file:
-        words = line.split("|")
-        if words[4] != "I":
-            all_students.append(words[0] + " " +words[1])
-        if words[4][0] == "W":
-            winter_16.append(words[0] + " " +words[1])
-        if words[4][0] == "F":
-            fall_15.append(words[0] + " " +words[1])   
-        if words[4][1] == "u":
-            summer_16.append(words[0] + " " +words[1])
-        if words[4][1] == "p":
-            spring_16.append(words[0] + " " +words[1])
-        if words[4][0] == "G":
-            ghosts.append(words[0] + " " +words[1])            
+        first, last, house, advisor, cohort = line.split("|")
+        if cohort != "I":
+            all_students.append(first + " " + last)
+
+        if cohort.startswith("Winter"):
+            winter_16.append(first + " " +last)
+        if cohort.startswith("Fall"):
+            fall_15.append(first + " " +last)   
+        if cohort.startswith("Summer"):
+            summer_16.append(first + " " +last)
+        if cohort.startswith("Spring"):
+            spring_16.append(first + " " +last)
+        if cohort.startswith("G"):
+            ghosts.append(first + " " +last)            
     all_cohorts = [fall_15, winter_16, spring_16, summer_16, ghosts]
     return all_cohorts   
     
@@ -89,42 +90,42 @@ def hogwarts_by_house(filename):
     instructors = []
 
     # open the file
-    open_file = open(filename)
+    with open(filename) as open_file:
     #loop through file and split line by "|", store in words var
-    for line in open_file:
-        #strip white space
-        line = line.rstrip()
-        word = line.split("|")
-        #if word[2] == "Gryffindor" append
-        if word[2] == "Gryffindor":
-            gryffindor.append(word[1])
-            gryffindor.sort()
+        for line in open_file:
+            #strip white space
+            line = line.rstrip()
+            first, last, house, advisor, cohort = line.split("|")
+            #if word[2] == "Gryffindor" append
+            if house.startswith("Gryffindor"):
+                gryffindor.append(word[1])
+                gryffindor.sort()
 
-        #if word[2] == "Ravenclaw" append
-        if word[2] == "Ravenclaw":
-            ravenclaw.append(word[1])
-            ravenclaw.sort()
-        #if word[2] == "Slytherin" append
-        if word[2] == "Slytherin":
-            slytherin.append(word[1])
-            slytherin.sort()
-        #if word[2] == "Hufflepuff" append
-        if word[2] == "Hufflepuff":
-            hufflepuff.append(word[1])
-            hufflepuff.sort()
-        #if word[4] == "G" append
-        if word[4][0] == "G":
-            ghosts.append(word[1])
-            ghosts.sort() 
-        #if word[4] == "Dumbledore's Army"
-        if word[2] == "Dumbledore's Army":
-            dumbledores_army.append(word[1])
-            dumbledores_army.sort()
-        #if word[4] == "I" append
-        if word[4][0] == "I":
-            instructors.append(word[1])
-            instructors.sort()
-        #all_hogwarts .extend all lists
+            #if word[2] == "Ravenclaw" append
+            if house.startswith("Ravenclaw"):
+                ravenclaw.append(word[1])
+                ravenclaw.sort()
+            #if word[2] == "Slytherin" append
+            if house.startswith("Slytherin"):
+                slytherin.append(word[1])
+                slytherin.sort()
+            #if word[2] == "Hufflepuff" append
+            if house.startswith("Hufflepuff"):
+                hufflepuff.append(word[1])
+                hufflepuff.sort()
+            #if word[4] == "G" append
+            if "G":
+                ghosts.append(word[1])
+                ghosts.sort() 
+            #if word[4] == "Dumbledore's Army"
+            if house.startswith("Dumbledore's Army"):
+                dumbledores_army.append(word[1])
+                dumbledores_army.sort()
+            #if word[4] == "I" append
+            if wor "I":
+                instructors.append(word[1])
+                instructors.sort()
+            #all_hogwarts .extend all lists
         
     all_hogwarts = [dumbledores_army, gryffindor, hufflepuff, ravenclaw, slytherin, ghosts, instructors]
 
