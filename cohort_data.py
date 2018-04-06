@@ -16,9 +16,9 @@ def unique_houses(filename):
     houses = set()
 
     for line in open_file:
-        full_line = line.split("|")
-        if "" not in full_line:
-            houses.add(full_line[2])
+        columns = line.split("|")
+        if columns[2] != "":
+            houses.add(columns[2])
     return houses
 
 unique_houses("cohort_data.txt")    
