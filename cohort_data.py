@@ -116,7 +116,7 @@ def hogwarts_by_house(filename):
             ghosts.append(word[1])
             ghosts.sort() 
         #if word[4] == "Dumbledore's Army"
-        if word[4] == "Dumbledores Army":
+        if word[2] == "Dumbledore's Army":
             dumbledores_army.append(word[1])
             dumbledores_army.sort()
         #if word[4] == "I" append
@@ -125,7 +125,7 @@ def hogwarts_by_house(filename):
             instructors.sort()
         #all_hogwarts .extend all lists
         
-    all_hogwarts.extend(dumbledores_army, gryffindor, hufflepuff, ravenclaw, slytherin, ghosts, instructors)
+    all_hogwarts = [dumbledores_army, gryffindor, hufflepuff, ravenclaw, slytherin, ghosts, instructors]
 
     return all_hogwarts
 print hogwarts_by_house("cohort_data.txt")    
